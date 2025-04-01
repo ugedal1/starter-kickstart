@@ -16,11 +16,55 @@ return {
         },
         view_options = { show_hidden = true },
       }
-      --open parent directory in current window
-      vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'open parent directory' })
-
       -- open parent directory in floating window
-      vim.keymap.set('n', '<space>-', require('oil').toggle_float)
+      vim.keymap.set('n', '-', require('oil').toggle_float)
     end,
+  },
+  {
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {
+      on_attach = function(client)
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+      end,
+    },
+  },
+
+  {
+    'GustavEikaas/easy-dotnet.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
+    config = function()
+      require('easy-dotnet').setup()
+    end,
+  },
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = true,
+  },
+  {
+    'nvimtools/none-ls.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = function()
+      local null_ls = require 'null-ls'
+      local lsp_util = require 'lspconfig.util'
+
+      return {
+        root_dir = lsp_util.root_pattern('.prettierrc', '.prettierrc.json', 'prettier.config.js', 'package.json', '.git'),
+        sources = {
+          null_ls.builtins.formatting.prettierd.with {
+            -- Let prettierd auto-detect config like in VSCode
+            extra_args = {},
+          },
+        },
+      }
+    end,
+  }, -- add this to your lua/plugins.lua, lua/plugins/init.lua,  or the file you keep your other plugins:
+  {
+    'numToStr/Comment.nvim',
+    opts = {
+      -- add any options here
+    },
   },
 }
