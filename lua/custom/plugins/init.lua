@@ -3,6 +3,8 @@
 --
 -- See the kickstart.nvim README for more information
 return {
+  { 'akinsho/git-conflict.nvim', version = '*', config = true },
+
   {
     'stevearc/oil.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' }, -- use if prefer nvim-web-devicons
